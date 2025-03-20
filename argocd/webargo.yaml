@@ -1,45 +1,46 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: web-app
-  labels:
-    app: web-app
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: web-app
-  template:
-    metadata:
-      labels:
-        app: web-app
-    spec:
-      containers:
-        - name: nginx
-          image: nginx:latest
-          ports:
-            - containerPort: 80
-          volumeMounts:
-            - name: web-content
-              mountPath: /usr/share/nginx/html
-      volumes:
-        - name: web-content
-          configMap:
-            name: web-content
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-app-service
+  managedFields:
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:internalTrafficPolicy: {}
+          f:ports:
+            .: {}
+            k:{"port":80,"protocol":"TCP"}:
+              .: {}
+              f:name: {}
+              f:port: {}
+              f:protocol: {}
+              f:targetPort: {}
+          f:selector: {}
+          f:sessionAffinity: {}
+          f:type: {}
+      manager: agent
+      operation: Update
+  name: kur
+  namespace: default
 spec:
-  type: ClusterIP
+  clusterIP: 10.43.120.217
+  clusterIPs:
+    - 10.43.120.217
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: hppt
+      port: 80
+      protocol: TCP
+      targetPort: 80
   selector:
     app: web-app
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-      nodePort: 30080  # Ensure this is within the allowed range (30000-32767)
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
 ---
 apiVersion: v1
 kind: ConfigMap
