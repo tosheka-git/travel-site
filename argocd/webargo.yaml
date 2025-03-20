@@ -32,7 +32,7 @@ kind: Service
 metadata:
   name: web-app-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: web-app
   ports:
