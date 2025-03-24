@@ -124,20 +124,8 @@ spec:
       terminationGracePeriodSeconds: 30
 status:
   availableReplicas: 1
-  conditions:
-    - lastTransitionTime: ''
-      lastUpdateTime: ''
-      message: ReplicaSet "hello-kubernetes-76465c898c" has successfully progressed.
-      reason: NewReplicaSetAvailable
-      status: 'True'
-      type: Progressing
-    - lastTransitionTime: ''
-      lastUpdateTime: ''
-      message: Deployment has minimum availability.
-      reason: MinimumReplicasAvailable
-      status: 'True'
-      type: Available
   observedGeneration: 10
   readyReplicas: 1
   replicas: 1
   updatedReplicas: 1
+
